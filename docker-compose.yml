@@ -1,0 +1,22 @@
+version: '2.3'
+services:
+  local-wptserver:
+    build: ./server
+    image: local-wptserver
+    container_name: local-wptserver
+    hostname: local_wptserver
+    restart: always
+    ports:
+      - 4000:80
+  local-wptagent:
+    build: ./agent
+    image: local-wptagent
+    container_name: local-wptagent
+    hostname: local_wptagent
+    restart: always
+    ports:
+      - 4001:80
+    network_mode: "host"
+    environment:
+      - SERVER_URL="http://localhost:4000/work/"
+      - LOCATION="Test"
